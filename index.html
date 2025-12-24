@@ -19,7 +19,7 @@ p{color:#555}
 }
 
 .card{
-  border-radius:12px;
+  border-radius:14px;
   overflow:hidden;
   background:#fff;
   box-shadow: 0 2px 10px rgba(0,0,0,.08);
@@ -52,20 +52,81 @@ p{color:#555}
   color:#333;
 }
 
-/* lightbox pentru poze */
+/* ===== Lightbox (doar poze) ===== */
 .lightbox{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.9);
+  background:rgba(0,0,0,.92);
   display:none;
   align-items:center;
   justify-content:center;
   z-index:999;
+  touch-action: pan-y;
 }
+
+.lightbox .frame{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .lightbox img{
-  max-width:95%;
-  max-height:95%;
-  border-radius:10px;
+  max-width:94vw;
+  max-height:88vh;
+  border-radius:12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* butoane */
+.lb-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  width:48px;
+  height:48px;
+  border-radius:999px;
+  font-size:26px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+}
+.lb-btn:hover{background:rgba(255,255,255,.22)}
+#prevBtn{left:14px}
+#nextBtn{right:14px}
+
+#closeBtn{
+  position:absolute;
+  top:14px;
+  right:14px;
+  transform:none;
+  font-size:22px;
+  width:44px;
+  height:44px;
+}
+
+.lb-counter{
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+  color:rgba(255,255,255,.85);
+  font-size:14px;
+  background:rgba(255,255,255,.12);
+  padding:6px 10px;
+  border-radius:999px;
+}
+
+/* pe ecrane mici, butoanele un pic mai mici */
+@media (max-width:480px){
+  .lb-btn{width:42px;height:42px;font-size:24px}
 }
 </style>
 </head>
@@ -76,75 +137,152 @@ p{color:#555}
 
 <div class="grid">
 
-  <!-- POZA 1 -->
+  <!-- 1) POZA -->
   <div class="card">
-    <img class="thumb" src="img/Screenshot_90.png" alt="Poza 1">
+    <img class="thumb photo" src="img/Screenshot_90.png" alt="Poza 1">
     <div class="caption">Poza 1</div>
   </div>
 
-  <!-- VIDEO 1 (Google Drive) -->
+  <!-- 2) VIDEO -->
   <div class="card">
     <div class="videoWrap">
-      <iframe
-        src="https://drive.google.com/file/d/1WyjeHbPNah8c6kAgL-o_0bzQqcoy7xg5/preview"
-        allow="autoplay"
-        loading="lazy">
-      </iframe>
+      <iframe src="https://drive.google.com/file/d/1WyjeHbPNah8c6kAgL-o_0bzQqcoy7xg5/preview" allow="autoplay" loading="lazy"></iframe>
     </div>
     <div class="caption">Video 1</div>
   </div>
 
-  <!-- POZA 2 -->
+  <!-- 3) POZA -->
   <div class="card">
-    <img class="thumb" src="img/Screenshot_91.png" alt="Poza 2">
+    <img class="thumb photo" src="img/Screenshot_91.png" alt="Poza 2">
     <div class="caption">Poza 2</div>
   </div>
 
-  <!-- POZA 3 -->
+  <!-- 4) VIDEO -->
   <div class="card">
-    <img class="thumb" src="img/Screenshot_92.png" alt="Poza 3">
+    <div class="videoWrap">
+      <iframe src="https://drive.google.com/file/d/1S--dh-kx_W_Rg51zN4h4OBh7irc281we/preview" allow="autoplay" loading="lazy"></iframe>
+    </div>
+    <div class="caption">Video 2</div>
+  </div>
+
+  <!-- 5) POZA -->
+  <div class="card">
+    <img class="thumb photo" src="img/Screenshot_92.png" alt="Poza 3">
     <div class="caption">Poza 3</div>
   </div>
 
-  <!-- POZA 4 -->
+  <!-- 6) VIDEO -->
   <div class="card">
-    <img class="thumb" src="img/Screenshot_93.png" alt="Poza 4">
+    <div class="videoWrap">
+      <iframe src="https://drive.google.com/file/d/17u8cln_uj5M4Lczm9VZ2ILsl97BVf9sX/preview" allow="autoplay" loading="lazy"></iframe>
+    </div>
+    <div class="caption">Video 3</div>
+  </div>
+
+  <!-- 7) POZA -->
+  <div class="card">
+    <img class="thumb photo" src="img/Screenshot_93.png" alt="Poza 4">
     <div class="caption">Poza 4</div>
   </div>
 
-  <!-- POZA 5 -->
+  <!-- 8) POZA -->
   <div class="card">
-    <img class="thumb" src="img/Screenshot_94.png" alt="Poza 5">
+    <img class="thumb photo" src="img/Screenshot_94.png" alt="Poza 5">
     <div class="caption">Poza 5</div>
   </div>
 
-  <!-- POZA 6 -->
-  <div class="card">
-    <img class="thumb" src="img/Screenshot_101.png" alt="Poza 6">
-    <div class="caption">Poza 6</div>
-  </div>
-
 </div>
 
-<!-- lightbox -->
-<div class="lightbox" id="lightbox">
-  <img id="lightbox-img" alt="">
+<!-- Lightbox (doar poze) -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="frame" id="lbFrame">
+    <button class="lb-btn" id="closeBtn" title="Inchide (Esc)">✕</button>
+    <button class="lb-btn" id="prevBtn" title="Inapoi (←)">‹</button>
+
+    <img id="lbImg" alt="">
+
+    <button class="lb-btn" id="nextBtn" title="Inainte (→)">›</button>
+    <div class="lb-counter" id="lbCounter">1 / 1</div>
+  </div>
 </div>
 
 <script>
+/* ====== Galerie doar pentru POZE (sageti + swipe) ====== */
+const photos = Array.from(document.querySelectorAll('.photo'));
 const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+const lbImg = document.getElementById('lbImg');
+const lbCounter = document.getElementById('lbCounter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const closeBtn = document.getElementById('closeBtn');
+const lbFrame = document.getElementById('lbFrame');
 
-document.querySelectorAll('.thumb').forEach(img=>{
-  img.addEventListener('click',()=>{
-    lightboxImg.src = img.src;
-    lightbox.style.display = 'flex';
-  });
-});
+let currentIndex = 0;
 
-lightbox.addEventListener('click',()=>{
+function openLightbox(index){
+  currentIndex = index;
+  lbImg.src = photos[currentIndex].src;
+  lbCounter.textContent = (currentIndex + 1) + " / " + photos.length;
+  lightbox.style.display = 'flex';
+  lightbox.setAttribute('aria-hidden','false');
+}
+
+function closeLightbox(){
   lightbox.style.display = 'none';
+  lightbox.setAttribute('aria-hidden','true');
+  lbImg.src = "";
+}
+
+function showPrev(){
+  currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+  lbImg.src = photos[currentIndex].src;
+  lbCounter.textContent = (currentIndex + 1) + " / " + photos.length;
+}
+
+function showNext(){
+  currentIndex = (currentIndex + 1) % photos.length;
+  lbImg.src = photos[currentIndex].src;
+  lbCounter.textContent = (currentIndex + 1) + " / " + photos.length;
+}
+
+/* click pe poza -> deschide */
+photos.forEach((img, idx)=>{
+  img.addEventListener('click', ()=> openLightbox(idx));
 });
+
+prevBtn.addEventListener('click', showPrev);
+nextBtn.addEventListener('click', showNext);
+closeBtn.addEventListener('click', closeLightbox);
+
+/* click pe fundal (nu pe imagine) -> inchide */
+lightbox.addEventListener('click', (e)=>{
+  if(e.target === lightbox) closeLightbox();
+});
+
+/* taste: stanga/dreapta, ESC */
+document.addEventListener('keydown', (e)=>{
+  if(lightbox.style.display !== 'flex') return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') showPrev();
+  if(e.key === 'ArrowRight') showNext();
+});
+
+/* swipe pe telefon */
+let startX = null;
+lbFrame.addEventListener('touchstart', (e)=>{
+  if(lightbox.style.display !== 'flex') return;
+  startX = e.changedTouches[0].clientX;
+},{passive:true});
+
+lbFrame.addEventListener('touchend', (e)=>{
+  if(lightbox.style.display !== 'flex' || startX === null) return;
+  const endX = e.changedTouches[0].clientX;
+  const diff = endX - startX;
+  const threshold = 40; // cat trebuie sa glisezi
+  if(diff > threshold) showPrev();
+  if(diff < -threshold) showNext();
+  startX = null;
+},{passive:true});
 </script>
 
 </body>

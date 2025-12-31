@@ -40,7 +40,7 @@ p{color:#555}
   height:220px;
   background:#000;
 }
-.videoWrap iframe, .videoWrap video{
+.videoWrap iframe{
   width:100%;
   height:100%;
   border:0;
@@ -124,6 +124,7 @@ p{color:#555}
   border-radius:999px;
 }
 
+/* pe ecrane mici */
 @media (max-width:480px){
   .lb-btn{width:42px;height:42px;font-size:24px}
 }
@@ -136,11 +137,13 @@ p{color:#555}
 
 <div class="grid">
 
+  <!-- 1) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_90.png" alt="Poza 1">
     <div class="caption">Poza 1</div>
   </div>
 
+  <!-- 2) VIDEO -->
   <div class="card">
     <div class="videoWrap">
       <iframe src="https://drive.google.com/file/d/1WyjeHbPNah8c6kAgL-o_0bzQqcoy7xg5/preview" allow="autoplay" loading="lazy"></iframe>
@@ -148,11 +151,13 @@ p{color:#555}
     <div class="caption">Video 1</div>
   </div>
 
+  <!-- 3) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_91.png" alt="Poza 2">
     <div class="caption">Poza 2</div>
   </div>
 
+  <!-- 4) VIDEO -->
   <div class="card">
     <div class="videoWrap">
       <iframe src="https://drive.google.com/file/d/1S--dh-kx_W_Rg51zN4h4OBh7irc281we/preview" allow="autoplay" loading="lazy"></iframe>
@@ -160,11 +165,13 @@ p{color:#555}
     <div class="caption">Video 2</div>
   </div>
 
+  <!-- 5) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_92.png" alt="Poza 3">
     <div class="caption">Poza 3</div>
   </div>
 
+  <!-- 6) VIDEO -->
   <div class="card">
     <div class="videoWrap">
       <iframe src="https://drive.google.com/file/d/17u8cln_uj5M4Lczm9VZ2ILsl97BVf9sX/preview" allow="autoplay" loading="lazy"></iframe>
@@ -172,71 +179,71 @@ p{color:#555}
     <div class="caption">Video 3</div>
   </div>
 
+  <!-- 7) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_93.png" alt="Poza 4">
     <div class="caption">Poza 4</div>
   </div>
 
+  <!-- 8) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_94.png" alt="Poza 5">
     <div class="caption">Poza 5</div>
   </div>
 
+  <!-- 9) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_105.png" alt="Poza 6">
     <div class="caption">Poza 6</div>
   </div>
 
+  <!-- 10) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_106.png" alt="Poza 7">
     <div class="caption">Poza 7</div>
   </div>
 
+  <!-- 11) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_107.png" alt="Poza 8">
     <div class="caption">Poza 8</div>
   </div>
 
+  <!-- 12) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_108.png" alt="Poza 9">
     <div class="caption">Poza 9</div>
   </div>
 
+  <!-- 13) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_114.png" alt="Poza 10">
     <div class="caption">Poza 10</div>
   </div>
 
+  <!-- 14) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_115.png" alt="Poza 11">
     <div class="caption">Poza 11</div>
   </div>
 
-  <!-- === NOILE ELEMENTE === -->
+  <!-- === NOU: POZA -> VIDEO (15s) -> POZA (alternant) === -->
 
-  <!-- 12) POZA -->
+  <!-- 15) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_117.png" alt="Poza 12">
     <div class="caption">Poza 12</div>
   </div>
 
-  <!-- 13) VIDEO local -->
-  <div class="card">
-    <div class="videoWrap">
-      <video src="QZG_15sec.mp4" controls preload="metadata"></video>
-    </div>
-    <div class="caption">Video 4</div>
-  </div>
-
-  <!-- 14) VIDEO 1 sec Drive -->
+  <!-- 16) VIDEO (15 sec, Drive) -->
   <div class="card">
     <div class="videoWrap">
       <iframe src="https://drive.google.com/file/d/10lPhXb-D5s5Uhvs7ZbWVXDHpInCi2pU8/preview" allow="autoplay" loading="lazy"></iframe>
     </div>
-    <div class="caption">Video 5</div>
+    <div class="caption">Video 4</div>
   </div>
 
-  <!-- 15) POZA -->
+  <!-- 17) POZA -->
   <div class="card">
     <img class="thumb photo" src="img/Screenshot_118.png" alt="Poza 13">
     <div class="caption">Poza 13</div>
@@ -244,18 +251,21 @@ p{color:#555}
 
 </div>
 
-<!-- Lightbox -->
+<!-- Lightbox (doar poze) -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <div class="frame" id="lbFrame">
     <button class="lb-btn" id="closeBtn" title="Inchide (Esc)">✕</button>
     <button class="lb-btn" id="prevBtn" title="Inapoi (←)">‹</button>
+
     <img id="lbImg" alt="">
+
     <button class="lb-btn" id="nextBtn" title="Inainte (→)">›</button>
     <div class="lb-counter" id="lbCounter">1 / 1</div>
   </div>
 </div>
 
 <script>
+/* ====== Galerie doar pentru POZE (sageti + swipe) ====== */
 const photos = Array.from(document.querySelectorAll('.photo'));
 const lightbox = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
@@ -272,10 +282,12 @@ function openLightbox(index){
   lbImg.src = photos[currentIndex].src;
   lbCounter.textContent = (currentIndex + 1) + " / " + photos.length;
   lightbox.style.display = 'flex';
+  lightbox.setAttribute('aria-hidden','false');
 }
 
 function closeLightbox(){
   lightbox.style.display = 'none';
+  lightbox.setAttribute('aria-hidden','true');
   lbImg.src = "";
 }
 
@@ -312,14 +324,17 @@ document.addEventListener('keydown', (e)=>{
 
 let startX = null;
 lbFrame.addEventListener('touchstart', (e)=>{
+  if(lightbox.style.display !== 'flex') return;
   startX = e.changedTouches[0].clientX;
 },{passive:true});
 
 lbFrame.addEventListener('touchend', (e)=>{
+  if(lightbox.style.display !== 'flex' || startX === null) return;
   const endX = e.changedTouches[0].clientX;
   const diff = endX - startX;
-  if(diff > 40) showPrev();
-  if(diff < -40) showNext();
+  const threshold = 40;
+  if(diff > threshold) showPrev();
+  if(diff < -threshold) showNext();
   startX = null;
 },{passive:true});
 </script>
